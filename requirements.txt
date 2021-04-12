@@ -60,10 +60,6 @@ PyMuPDF==1.18.10
 pyparsing==2.4.7
 PyPDF2==1.26.0
 pypiwin32==223
-PyQt5==5.13.2
-PyQt5-sip==12.8.1
-pyqt5-tools==5.13.2.1.6rc1
-pyqtgraph==0.11.0
 pyTelegramBotAPI==3.7.7
 pytesseract==0.3.7
 python-dateutil==2.8.1
