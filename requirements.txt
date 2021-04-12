@@ -59,7 +59,6 @@ pyinstaller-hooks-contrib==2020.9
 PyMuPDF==1.18.10
 pyparsing==2.4.7
 PyPDF2==1.26.0
-pypiwin32==223
 pyTelegramBotAPI==3.7.7
 pytesseract==0.3.7
 python-dateutil==2.8.1
