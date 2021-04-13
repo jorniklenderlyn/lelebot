@@ -1,6 +1,7 @@
 aiofiles==0.6.0
 aiogram==2.12.1
 aiohttp==3.7.4.post0
+aioschedule==0.5.2
 altgraph==0.17
 async-timeout==3.0.1
 attrs==20.3.0
@@ -54,11 +55,13 @@ prov==2.0.0
 pycparser==2.20
 pycryptodome==3.10.1
 pydot==1.4.2
+pygame==2.0.1
 pyinstaller==4.0
 pyinstaller-hooks-contrib==2020.9
 PyMuPDF==1.18.10
 pyparsing==2.4.7
 PyPDF2==1.26.0
+pyqtgraph==0.11.0
 pyTelegramBotAPI==3.7.7
 pytesseract==0.3.7
 python-dateutil==2.8.1
