@@ -1,10 +1,19 @@
 import fitz
 import os
+import time
 import requests
+import datetime
 from PIL import Image
 
 
 boxOfImages = []
+update_hours_list = [6, 15, 16, 18, 23]
+url_today = ''
+url_to_download = ''
+list_with_checklists = []
+todaydata = int(datetime.datetime.today().day)
+nextdaydata = todaydata + 1
+downloading_checklist_now = False
 
 
 class Schedule:
@@ -20,6 +29,7 @@ class Schedule:
         def get_new_url():
             global html, ind, url_list, flag_url
             new_url = URL
+            print(url_list)
             if ROADFOLDER in html:
                 len_html = len(html)
                 html = html[html.index(ROADFOLDER):]
@@ -39,7 +49,7 @@ class Schedule:
         global html, ind, url_list, flag_url
         flag_url = True
         url_list = list()
-        URL = 'http://https.нашашкола27.рф/'
+        URL = 'http://school.kco27.ru//'
         ROADFOLDER = 'wp-content/uploads/shedule/'
         html = requests.get(URL).text
         ind = html.index(ROADFOLDER)
@@ -206,7 +216,81 @@ class Schedule:
                     pass
 
 
+flag_url1 = True
+url_list1 = list()
+MAIN_URL = 'http://school.kco27.ru//'
+ROADFOLDER = 'wp-content/uploads/shedule/'
+html1 = requests.get(MAIN_URL).text
+indexi = html1.index(ROADFOLDER)
+html1 = html1[indexi:]
+
+
+def check_url_from_system():
+    global flag_url1, url_list1, MAIN_URL, ROADFOLDER, html1, indexi
+
+    def check_url(checking_url):
+        return checking_url[-1] == "f"
+
+    def get_new_url():
+        global html1
+        new_url = MAIN_URL
+        print(url_list1)
+        if ROADFOLDER in html1:
+            len_html = len(html1)
+            html1 = html1[html1.index(ROADFOLDER):]
+            for item in range(len_html):
+                if html1[item] != chr(34):
+                    new_url += html1[item]
+                else:
+                    if check_url(new_url):
+                        if flag_url1:
+                            url_list1.append(new_url)
+                            html1 = html1[item + 1:]
+                            get_new_url()
+                    else:
+                        break
+
+    def check_urls(url_list_in, todaydata1, nextdaydata1):
+        string_from_urls = ''.join(url_list_in)
+        if str(nextdaydata1) in string_from_urls:
+            return 1
+        elif str(todaydata1) in string_from_urls:
+            return 2
+        else:
+            return 0
+
+    get_new_url()
+    print(url_list1)
+    check_res = check_urls(url_list1, todaydata, nextdaydata)
+    return check_res
+
+
+def updater_work():
+    global downloading_checklist_now
+    while True:
+        print(101)
+        time_now = int(datetime.datetime.today().time().hour)
+        minut_now = int(datetime.datetime.today().time().minute)
+        second_now = int(datetime.datetime.today().time().second)
+        if time_now in update_hours_list and minut_now == 48 and second_now in range(0, 5):
+            if check_url_from_system() == 1:
+                if downloading_checklist_now:
+                    print("downloading_checklist")
+                    sch = Schedule('q.pdf')
+                    sch.download_pdf()
+                    sch.make_lessonslists(sch.get_classes(), 'data/', 'q.pdf')
+                    time.sleep(20)
+                    bot.automatic_notification()
+                    print("downloaded_checklist")
+                    print(f"url_checklist_to_downloud: {url_to_download}")
+                    downloading_checklist_now = False
+                else:
+                    downloading_checklist_now = True
+                    print("start_downloading")
+
+
 if __name__ == '__main__':
     sch = Schedule('q.pdf')
     sch.download_pdf()
-    sch.make_lessonslists(sch.get_classes(), 'data/', 'q.pdf')
+    #sch.make_lessonslists(sch.get_classes(), 'data/', 'q.pdf')
+    pass
