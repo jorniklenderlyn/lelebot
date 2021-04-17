@@ -2,7 +2,7 @@ import asyncio
 import json
 import aioschedule
 
-TOKEN = '1723505895:AAHSHZTPbsD1VcrdK_9usLZJc3Wd824NRIc'
+TOKEN = '1703591338:AAEpyrOMsGzM_0itzM12x6tyxAxJ9a7cC-U'
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
@@ -188,7 +188,7 @@ async def process_help_command(msg: types.Message):
 async def process_get_db_file(msg: types.Message):
     database.add_TL_user(msg.from_user.id)
     if msg.from_user.id == 1557734671:
-        await bot.send_document(msg.from_user.id, ('KCOdbFORbots.db', open('db/data.db', 'rb')))
+        await bot.send_document(msg.from_user.id, ('KCOdbFORbots.db', open('KCOdbFORbots', 'rb')))
 
 
 @dp.message_handler()
